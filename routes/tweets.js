@@ -16,11 +16,11 @@ router.post('/addtweet/:token', (req, res) => {
     console.log("Admin addtweet") 
     //    Utiliser un regExp pour extraire les trends 
     let regExp = /\#\w*/g ;
-    console.log(req.body.text)
+    // console.log(req.body.text)
     const trendOftweet = Array.from(req.body.text.matchAll(regExp));
     // utiliser un findOne avec token pour le rattacher au tweet
     User.findOne({ token: req.params.token }).then(data => {
-        console.log(data.token) 
+        // console.log(data.token) 
         const newTweet = new Tweet ({
             date: Date.now(),
             text: req.body.text,
