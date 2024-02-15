@@ -5,6 +5,12 @@ require('../models/connection');
 const Tweet = require('../models/tweets');
 const User = require('../models/users')
 
+router.get('/', (req, res) => {
+    Tweet.find().then(data => {
+    res.json({ result: true, Tweet: data })
+});
+})
+
 
 router.post('/addtweet/:token', (req, res) => {
     console.log("Admin addtweet") 
