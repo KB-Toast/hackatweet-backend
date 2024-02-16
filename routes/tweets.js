@@ -41,4 +41,26 @@ router.delete("/delete/:id", (req, res) => {
     })
  })
 
+ router.put('/addLikes/:id/:token', (req, res) => {
+    const token = req.params.token
+    // faire une condition si token déjà présent dans numberLikes
+    // si non => push
+    // si oui => delete
+       if(!Tweet.findOne({ _id: req.params.id, numberLikes: token })
+        .then(() => {
+        res.json({result: true});
+        })) {
+            Tweet.updateOne({ _id: req.params.id }, { $push: {numberLikes: token}})
+            .then(() => {
+                res.json({result: true});
+                console.log(`Tweet ${req.params.id} updated`);
+            }) 
+        } else {
+            Tweet.updateOne({ _id: req.params.id }, { $pull: {numberLikes: token}})
+            .then(() => {
+                res.json({result: true});
+                console.log('like delete');
+        })}
+    })
+
  module.exports = router;
