@@ -29,15 +29,16 @@ router.post('/addtweet/:token', (req, res) => {
             author: data.id,
           });
           newTweet.save().then(newDoc => {
-            res.json({ result: true, trend: newDoc.trend })
+            res.json({ result: true, newTweet: newDoc })
         });
       })
 })
 
 
-router.delete("/:tweets", (req, res) => {
-    Tweet.deleteOne({id})
-    res.json({ result: true });
+router.delete("/delete/:id", (req, res) => {
+    Tweet.deleteOne({_id: req.params.id}).then(data => {
+        res.json({ result: true })
+    })
  })
 
  module.exports = router;
