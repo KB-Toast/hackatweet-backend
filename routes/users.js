@@ -17,14 +17,12 @@ router.post('/signup', (req, res) => {
   User.findOne({ userName: req.body.userName }).then(data => {
     if (data === null) {
       const hash = bcrypt.hashSync(req.body.password, 10);
-
       const newUser = new User({
         firstName: req.body.firstName,
         userName: req.body.userName,
         password: hash,
         token: uid2(32),
       });
-
       newUser.save().then(newDoc => {
         res.json({ result: true, token: newDoc.token });
       });
@@ -36,7 +34,9 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
+  console.log('body: ');
   if (!checkBody(req.body, ['userName', 'password'])) {
+
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
   }
@@ -50,4 +50,5 @@ router.post('/signin', (req, res) => {
   });
 });
 
-module.exports = router;
+
+module.exports = router; 
